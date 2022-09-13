@@ -1,7 +1,9 @@
 
 
 pipeline {
-    agent any //run on any jenkins available node or where to execute
+    agent {
+        label 'Sel-Windows'
+    } //run on any jenkins available node or where to execute
     
     stages { //where whole work actual happens
         stage("build") {
