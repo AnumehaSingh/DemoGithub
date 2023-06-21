@@ -23,15 +23,10 @@ pipeline {
                 steps {
                     parallel (
                         stage('A'){
-                        "firstTask" : {
-                            
                              echo 'building first task the application.......... '
-                        }
                         },
                         stage('B'){
-                        "secondTask" : {
                              echo 'building second task the application.......... '
-                        }
                         }
                     )
                 }
