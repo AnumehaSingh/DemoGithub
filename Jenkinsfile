@@ -4,6 +4,11 @@ pipeline {
     agent { //run on any jenkins available node or where to execute
         label 'Sel-Windows'
     } 
+     parameters {
+          string(name: 'SYSTEM', defaultValue: '', description: 'Enter array. Example:SYS-123')
+
+          string(name: 'EMail', defaultValue: '', description: 'Enter email id')
+ }
     
     stages { //where whole work actual happens
         stage("build") {
@@ -17,52 +22,20 @@ pipeline {
             stage("Parallel") {
                 steps {
                     parallel (
+                        stage('A'){
                         "firstTask" : {
                             
                              echo 'building first task the application.......... '
+                        }
                         },
+                        stage('B'){
                         "secondTask" : {
                              echo 'building second task the application.......... '
+                        }
                         }
                     )
                 }
             }
-              stage('QA') {
-                    when { expression { params.CLICK == 'QA' } }
-                  steps {
-                            script {
-                                       CHOICES = ['IIP', 'APIM', 'STUDIO'];    
-                                        env.CLICK1 = input  message: 'Choose appropriate Test?',ok : 'Deploy',id :'tag_id', parameters:[choice(choices: CHOICES, description: 'Make a choice', name: 'Select')]
-                    } 
-    
-                }
-        }  
-        parallel {
-            stage('A') {
-                when {
-                    expression { env.CLICK == 'IIP' }
-                }
-                steps {
-                  echo "A"
-                } 
-            }
-            stage('B') {
-                when {
-                    expression { env.CLICK == 'APIM' }
-                }
-                steps {
-                  echo "B"
-                } 
-            }
-            stage('C') {
-                when {
-                    expression { env.CLICK == 'STUDIO' }
-                }
-                steps {
-                  echo "C"
-                } 
-            }
-        }
         stage("deploy") {
         
             steps {
