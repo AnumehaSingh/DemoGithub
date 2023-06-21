@@ -21,17 +21,18 @@ pipeline {
         }
             stage("Parallel") {
                 steps {
-                        parallel firstBranch: {
-                        stage ('Starting Test') 
-                        {
-                            echo 'building the test1 application.......... '
+                        parallel(
+                            'Unit Tests': {
+                                container('node') {
+                                                sh("npm test --cat=unit")
                         }
-                    }, secondBranch: {
-                        stage ('Starting Test2') 
-                        {
-                            echo 'building the test 2 application.......... '
+                    },
+                    'API Tests': {
+                        container('node') {
+                            sh("npm test --cat=acceptance")
+                            }
                         }
-                    }
+                    )
                 }
             }
         stage("deploy") {
