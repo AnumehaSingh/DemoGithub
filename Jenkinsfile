@@ -21,17 +21,17 @@ pipeline {
         }
             stage("Parallel") {
                 steps {
-                    parallel (
-                        "firstBranch": { stage('A') {
-                             echo 'building first task the application.......... '
-                            }
-                        },
-                        "secondbranch":{
-                        stage('B'){
-                             echo 'building second task the application.......... '
-                                }
+                        parallel firstBranch: {
+                        stage ('Starting Test') 
+                        {
+                            echo 'building the test1 application.......... '
                         }
-                    )
+                    }, secondBranch: {
+                        stage ('Starting Test2') 
+                        {
+                            echo 'building the test 2 application.......... '
+                        }
+                    }
                 }
             }
         stage("deploy") {
