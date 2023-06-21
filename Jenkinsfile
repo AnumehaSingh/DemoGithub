@@ -18,10 +18,10 @@ pipeline {
                 steps {
                     parallel (
                         "firstTask" : {
-                            //do some stuff
+                             echo 'building first task the application.......... '
                         },
                         "secondTask" : {
-                            // Do some other stuff in parallel
+                             echo 'building second task the application.......... '
                         }
                     )
                 }
