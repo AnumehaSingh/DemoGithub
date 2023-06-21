@@ -14,18 +14,20 @@ pipeline {
                    
                }
         }
-        stage("test") {
-        
-           parallel(
+        stage('Tests') {
+                parallel(
                     'Unit Tests': {
-                                     echo 'Unit Tests for building the application.......... '
-                },
+                        container('node') {
+                            sh("npm test --cat=unit")
+                        }
+                    },
                     'API Tests': {
-                                    echo 'API Tests for building the application.......... '
+                        container('node') {
+                            sh("npm test --cat=acceptance")
+                        }
+                    }
+                )
             }
-        )
-
-    }
         stage("deploy") {
         
             steps {
