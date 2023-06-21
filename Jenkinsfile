@@ -16,11 +16,17 @@ pipeline {
         }
         stage("test") {
         
-            steps {
-            
-                  echo 'testing the application....... '
-                  
+           parallel(
+                    'Unit Tests': {
+                                     echo 'Unit Tests for building the application.......... '
+                }
+        },
+                    'API Tests': {
+                                    echo 'API Tests for building the application.......... '
             }
+        }
+    )
+
         }
         stage("deploy") {
         
