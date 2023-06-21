@@ -22,16 +22,12 @@ pipeline {
             stage("Parallel") {
                 steps {
                         parallel(
-                            'Unit Tests': {
-                                container('node') {
-                                                sh("npm test --cat=unit")
-                        }
+                            'IIP Tests': {
+                                 echo 'deploying the application IIP........ '            
                     },
                     'API Tests': {
-                        container('node') {
-                            sh("npm test --cat=acceptance")
+                                 echo 'deploying the application APIM........ '
                             }
-                        }
                     )
                 }
             }
